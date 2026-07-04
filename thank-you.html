@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — Build With AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --grey: #6B6B6B;
+  --line: rgba(0,0,0,0.12);
+  --wa-green: #25D366;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.stripe { position: fixed; top:0; left:0; right:0; height: 4px; background: var(--black); }
+.card {
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  padding: 40px 28px;
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.03);
+  color: var(--black);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 8px 18px; border-radius: 100px;
+  margin-bottom: 26px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 8vw, 44px);
+  font-weight: 900; line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+p { color: var(--grey); font-size: 15px; line-height: 1.7; margin-bottom: 30px; font-weight: 300; }
+.btn-lime {
+  display: block; background: var(--black); color: var(--white); font-weight: 700; font-size: 15px;
+  letter-spacing: 0.04em; padding: 18px 20px; border-radius: 100px;
+  text-decoration: none; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  margin-bottom: 14px;
+}
+.footer-note { margin-top: 32px; font-size: 12px; color: var(--grey); line-height: 1.6; }
+.footer-note a { color: var(--black); text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<div class="card">
+  <div class="tag">✓ Payment Received</div>
+  <h1>Your ebook is<br>ready.</h1>
+  <p>Thank you for trusting Build With AI. Tap below to download "Get Your First 3 Clients In 14 Days" — your 14-day system starts now.</p>
+  <a href="https://drive.google.com/uc?export=download&id=1zPI3H6VluQpeD16tdQEBNDTCXByC5emH" class="btn-lime">Download Your Ebook</a>
+  <div class="footer-note">Didn't get your download? Email <a href="mailto:nomhlemai@gmail.com">nomhlemai@gmail.com</a> and I'll send it personally.</div>
+</div>
+</body>
+</html>
