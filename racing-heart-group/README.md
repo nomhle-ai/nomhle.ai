@@ -4,22 +4,36 @@ Single-page marketing site for Racing Heart Group (PTY) LTD, built as one
 self-contained `index.html`. No build step, no dependencies — open the file
 in a browser or drop the folder on any static host.
 
-## Adding your media
+## Media
 
-The hero video and the gallery ship with placeholder graphics. Replace them:
+### Hero video — done
 
-| Slot | Drop the file at | Then |
-| --- | --- | --- |
-| Hero video | `assets/hero.mp4` (and optionally `assets/hero.webm`) | Replace the `poster` data-URI on the `<video>` with `assets/hero-poster.jpg` |
-| Gallery photos | `assets/gallery/01.jpg` … `06.jpg` | Point each `.gallery__item img` `src` at its file |
+`assets/hero.mp4` is the Bio-Separator Toilet System explainer (3:11),
+transcoded from the original `IMG_3046.mov`. The source was **HEVC/H.265 in a
+QuickTime container**, which Chrome and Firefox cannot play, so it was
+re-encoded to H.264 High\@4.0 + AAC-LC — supported by every current browser —
+with `+faststart` so playback begins before the file finishes downloading.
+`assets/hero-poster.jpg` is the title card, shown before play.
+
+The source is only 568x320, so it is soft on large or high-DPI screens. The
+hero frame renders it at roughly its native width, which is about as good as
+it gets. If a higher-resolution master exists, re-encode with the same
+settings and drop it in:
+
+```sh
+ffmpeg -i MASTER.mov -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p \
+  -profile:v high -level 4.0 -c:a aac -b:a 128k -movflags +faststart hero.mp4
+```
+
+### Gallery — still placeholders
+
+The six tiles use generated placeholder graphics. Replace them by dropping
+photos at `assets/gallery/01.jpg` … `06.jpg` and pointing each
+`.gallery__item img` `src` at its file.
 
 Keep the `alt` text and `.gallery__cap` captions accurate to whatever photo
 you swap in — they describe the image to screen readers and drive the
 lightbox caption.
-
-Prefer a YouTube/Vimeo embed instead? Swap the `<video>` element inside
-`.hero__media` for the provider's `<iframe>`; the surrounding frame and
-caption styling still apply.
 
 ## Contact form
 
