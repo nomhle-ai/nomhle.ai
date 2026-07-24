@@ -25,15 +25,31 @@ ffmpeg -i MASTER.mov -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p \
   -profile:v high -level 4.0 -c:a aac -b:a 128k -movflags +faststart hero.mp4
 ```
 
-### Gallery — still placeholders
+### Gallery — done
 
-The six tiles use generated placeholder graphics. Replace them by dropping
-photos at `assets/gallery/01.jpg` … `06.jpg` and pointing each
-`.gallery__item img` `src` at its file.
+Five site photographs in `assets/gallery/`, ordered as an installation
+narrative: chamber being fitted, chamber set and connected, completed
+installation, municipal site visit, and a resident with her new toilet.
 
-Keep the `alt` text and `.gallery__cap` captions accurate to whatever photo
-you swap in — they describe the image to screen readers and drive the
-lightbox caption.
+Each exists at two widths — `NN.jpg` (800px) for the tiles and `NN@2x.jpg`
+(1600px) for retina and the lightbox — selected via `srcset`. The camera
+originals were 3–4 MB each; the whole set is now about 2 MB.
+
+**All EXIF was stripped during processing.** Three of the originals carried
+GPS coordinates, which would have published the exact location of the
+beneficiaries' homes. If you add more photos, strip metadata the same way:
+
+```sh
+ffmpeg -i ORIGINAL.jpg -map_metadata -1 \
+  -vf "scale='if(gt(iw,ih),1600,-2)':'if(gt(iw,ih),-2,1600)'" -q:v 4 NN@2x.jpg
+```
+
+`-map_metadata -1` is what removes the GPS. Do not skip it.
+
+Tiles crop to 4:3; `.gallery__item--low` and `--high` bias that crop toward
+the subject on portrait sources. The lightbox always shows the full frame.
+Keep `alt` text and `.gallery__cap` captions accurate to the photo — they
+describe the image to screen readers and drive the lightbox caption.
 
 ## Contact form
 
