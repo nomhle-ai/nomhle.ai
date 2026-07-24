@@ -410,6 +410,58 @@ h1, h2, h3 { font-family: var(--display); margin: 0; }
 }
 .lightbox__close:hover { background: rgba(192,57,43,.7); }
 
+/* ---- press / podcast ---- */
+.press {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 28px;
+  margin-top: 44px; padding: clamp(24px, 3vw, 34px);
+  background: #F3F4F6; border-radius: 16px;
+  border-left: 4px solid var(--accent);
+}
+.press__body { flex: 1 1 320px; min-width: 0; }
+.press__station {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12px; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent);
+}
+.press__station::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+}
+.press__title {
+  font-family: var(--display); font-weight: 800; font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.15; color: var(--ink); margin: 12px 0 0; text-wrap: balance;
+}
+.press__meta { color: var(--grey); font-size: 14px; font-weight: 600; margin: 10px 0 0; }
+.press__link {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 14px; color: var(--accent);
+  font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.press__link:hover { text-decoration: underline; }
+
+/* click-to-load facade: no third-party request until the visitor asks for it */
+.press__player { flex: 1 1 340px; min-width: 0; }
+.press__load {
+  display: flex; align-items: center; gap: 16px; width: 100%;
+  padding: 18px 22px; border-radius: 12px; cursor: pointer;
+  text-align: left; font-family: inherit;
+  background: var(--ink); border: 1px solid rgba(107,114,128,.4);
+  transition: border-color .18s ease, transform .18s ease;
+}
+.press__load:hover { border-color: var(--accent); transform: translateY(-2px); }
+.press__load-icon {
+  flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 22px rgba(192,57,43,.4);
+}
+.press__load-text  { display: block; font-size: 15px; font-weight: 700; color: #fff; }
+.press__load-note  { display: block; font-size: 12.5px; color: var(--text-on-dark-soft); margin-top: 3px; }
+.press__player iframe {
+  width: 100%; height: 180px; border: 0; border-radius: 12px; display: block;
+}
+@media (max-width: 700px) { .press { gap: 20px; } }
+
 /* ---- projects ---- */
 .projects__head {
   display: flex; flex-wrap: wrap; align-items: flex-end;
@@ -956,6 +1008,42 @@ a.contact__item:hover { color: #fff; }
   </div>
 </section>
 
+<!-- ===================== IN THE MEDIA ===================== -->
+<section class="section section--light" id="media">
+  <div class="shell">
+    <div class="section-head">
+      <p class="eyebrow">In The Media</p>
+      <h2 class="h2">Heard On POWER FM</h2>
+      <p class="lede">Racing Heart Group joined POWER Drive to talk about what replaces costly chemical toilets — and why on-site treatment beats endless tanker trips.</p>
+    </div>
+
+    <div class="press">
+      <div class="press__body">
+        <p class="press__station">POWER FM &middot; POWER Drive</p>
+        <h3 class="press__title">Exploring Alternatives To Costly Chemical Toilets</h3>
+        <p class="press__meta">Radio interview &middot; featured in The Best of POWER Drive</p>
+        <a class="press__link" href="https://omny.fm/shows/power-drive/exploring-alternatives-to-costly-chemical-toilets?in_playlist=the-best-of-power-drive" target="_blank" rel="noopener">
+          Listen on omny.fm
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+      </div>
+
+      <div class="press__player" id="press-player">
+        <button class="press__load" type="button" id="press-load"
+                data-embed="https://omny.fm/shows/power-drive/exploring-alternatives-to-costly-chemical-toilets/embed">
+          <span class="press__load-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2 19 12 8 18.8Z"/></svg>
+          </span>
+          <span>
+            <span class="press__load-text">Play the interview</span>
+            <span class="press__load-note">Loads the POWER FM player from omny.fm</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== CONTACT ===================== -->
 <section class="contact" id="contact">
   <div class="contact__grid">
@@ -1039,6 +1127,7 @@ a.contact__item:hover { color: #fff; }
       <a href="#gallery">Gallery</a>
       <a href="#benefits">Benefits</a>
       <a href="#projects">Projects</a>
+      <a href="#media">In the Media</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="site-footer__legal">© 2026 Racing Heart Group (PTY) LTD.<br>All rights reserved.</div>
@@ -1115,6 +1204,20 @@ a.contact__item:hover { color: #fff; }
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !box.hasAttribute('hidden')) closeBox();
   });
+
+  // ---- POWER FM interview: swap the facade for the real player on click ----
+  var pressLoad = document.getElementById('press-load');
+
+  if (pressLoad) {
+    pressLoad.addEventListener('click', function () {
+      var frame = document.createElement('iframe');
+      frame.src = pressLoad.dataset.embed;
+      frame.title = 'POWER Drive — Exploring Alternatives To Costly Chemical Toilets';
+      frame.allow = 'autoplay; clipboard-write; encrypted-media';
+      frame.setAttribute('loading', 'lazy');
+      document.getElementById('press-player').replaceChildren(frame);
+    });
+  }
 
   // ---- contact form ----
   // NOTE: no backend yet — this only shows the confirmation state.
